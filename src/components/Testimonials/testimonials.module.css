@@ -74,6 +74,7 @@
   0% {
     transform: translateX(0);
   }
+
   100% {
     transform: translateX(calc(-25% * 4 - 24px * 3));
   }
