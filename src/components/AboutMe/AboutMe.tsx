@@ -1,61 +1,64 @@
 'use client';
 
 import styles from './aboutme.module.css';
+import { ClientsShowcase } from '@/components/ClientsShowcase';
 
 export default function AboutMe() {
     return (
         <section className={styles.aboutMeSection} id="about-me">
+            <ClientsShowcase />
             <div className={styles.container}>
                 <div className={styles.moreInfo}>
-                    <h2 className={styles.title}>Meet Meily</h2>
+                    <h2 className={styles.title}>Asad Ali</h2>
 
                     <section className={styles.about}>
                         <p className={styles.bio}>
-                            I'm Meily, a passionate Brand Identity & Package Designer based in tokyo.
-                            I specialize in crafting bold visual identities and packaging that captivate and inspire,
-                            blending creativity with strategy to elevate brands.
+                            I&apos;m Asad, a passionate Full Stack Developer based in Pakistan.
+                            I specialize in building scalable web applications and clean architectures,
+                            blending performance with practical design to deliver reliable digital products.
                         </p>
                     </section>
 
                     <div className={styles.line}></div>
 
                     <section className={styles.skills}>
-                        <div className={styles.skillTag}>Product Design</div>
-                        <div className={styles.skillTag}>Brand Identity Design</div>
-                        <div className={styles.skillTag}>UX Design</div>
-                        <div className={styles.skillTag}>Branding</div>
-                        <div className={styles.skillTag}>Packaging Design</div>
-                        <div className={styles.skillTag}>Figma</div>
-                        <div className={styles.skillTag}>Photoshop</div>
+                        <div className={styles.skillTag}>Product Development</div>
+                        <div className={styles.skillTag}>Full Stack Development</div>
+                        <div className={styles.skillTag}>Backend Architecture</div>
+                        <div className={styles.skillTag}>API Design</div>
+                        <div className={styles.skillTag}>System Design</div>
+                        <div className={styles.skillTag}>NestJS</div>
+                        <div className={styles.skillTag}>React</div>
+                        <div className={styles.skillTag}>TypeScript</div>
                     </section>
 
                     <div className={styles.line}></div>
 
                     <section className={styles.experience}>
                         <div className={styles.experienceItem}>
-                            <div className={styles.position}>Freelance</div>
-                            <div className={styles.company}>GreenLeaf Co</div>
-                            <div className={styles.period}>Currently</div>
+                            <div className={styles.position}>Full Stack Developer</div>
+                            <div className={styles.company}>Freelance</div>
+                            <div className={styles.period}>2025–Currently</div>
                         </div>
 
                         <div className={styles.experienceItem}>
-                            <div className={styles.position}>Brand Designer</div>
-                            <div className={styles.company}>UrbanFit Studio</div>
-                            <div className={styles.period}>2023-24</div>
+                            <div className={styles.position}>Full Stack Developer</div>
+                            <div className={styles.company}>SilverConcepts</div>
+                            <div className={styles.period}>2024–2025</div>
                         </div>
 
                         <div className={styles.experienceItem}>
-                            <div className={styles.position}>Package Designer</div>
-                            <div className={styles.company}>GreenK Studio</div>
-                            <div className={styles.period}>2020-22</div>
+                            <div className={styles.position}>Backend Developer</div>
+                            <div className={styles.company}>Carbonteq</div>
+                            <div className={styles.period}>2022–2024</div>
                         </div>
                     </section>
                 </div>
 
                 <div className={styles.profileImage}>
                     <img
-                        src="https://framerusercontent.com/images/roWFLkzHAotwSx5UxGPxpxMeA.jpg"
-                        alt="profile pic"
+                        src="/DP/dp.jpeg"
+                        alt="Asad - Full Stack Developer"
                     />
                 </div>
             </div>

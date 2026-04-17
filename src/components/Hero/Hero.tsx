@@ -42,16 +42,16 @@ export default function Hero({
                 </p>
 
                 <div className={styles.buttonGroup}>
-                    <button className={`${styles.btn} ${styles.btnPrimary}`}>
+                    <a href="#contact" className={`${styles.btn} ${styles.btnPrimary}`}>
                         <span>Get Started Now</span>
-                    </button>
-                    <button className={`${styles.btn} ${styles.btnSecondary}`}>
+                    </a>
+                    <a href="#recent-works" className={`${styles.btn} ${styles.btnSecondary}`}>
                         <span>See Projects</span>
-                    </button>
+                    </a>
                 </div>
             </div>
 
-            {/* @ts-ignore - spline-viewer is a web component */}
+            {/* @ts-expect-error - spline-viewer is a web component */}
             <spline-viewer url={splineUrl} />
         </section>
     );

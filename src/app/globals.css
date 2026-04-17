@@ -1,11 +1,5 @@
 @import "tailwindcss";
 
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
 :root {
   --background-dark: #000000;
   --background-light: #1a1a1a;

@@ -28,10 +28,10 @@ const defaultConfig: NavbarConfig = {
     logoText: 'MonkeySoft',
     logoHref: '#/hero',
     navLinks: [
-        { label: 'Services', href: '#services' },
-        { label: 'Projects', href: '#projects' },
+        { label: 'Services', href: '#about-section' },
+        { label: 'Projects', href: '#recent-works' },
         { label: 'Testimonials', href: '#testimonials' },
-        { label: 'Contact', href: 'mailto:contact@example.com', external: false },
+        { label: 'Contact', href: '#contact' },
     ],
     ctaButton: {
         label: 'Get Started',

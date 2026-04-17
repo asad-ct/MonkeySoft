@@ -6,19 +6,18 @@ import AboutMe from '@/components/AboutMe';
 import { RecentWorks } from '@/components/RecentWorks';
 import { Process } from '@/components/Process';
 import { Testimonials } from '@/components/Testimonials';
+import { ContactUs } from '@/components/ContactUs';
 
 export default function Home() {
   return (
     <main>
       <Hero />
       <Projects />
-      {/* <ProjectsShowcase />
-      <PhotoGrid /> */}
       <AboutMe />
       <RecentWorks />
       <Process />
       <Testimonials />
-      {/* Additional sections will be added as modular components */}
+      <ContactUs />
     </main>
   );
 }

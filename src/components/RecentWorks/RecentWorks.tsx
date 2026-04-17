@@ -1,6 +1,6 @@
 'use client';
 
-import { useRef, useState } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import styles from './recentworks.module.css';
 
 interface Project {
@@ -9,38 +9,17 @@ interface Project {
     title: string;
 }
 
-const projects: Project[] = [
-    {
-        id: 1,
-        image: 'https://framerusercontent.com/images/bed888CTflXNK3KFX1R7VhRMtE.png',
-        title: 'Project 1'
-    },
-    {
-        id: 2,
-        image: 'https://framerusercontent.com/images/JGI1jOpxUUfW0IRfPmx7eMGhc.png',
-        title: 'Project 2'
-    },
-    {
-        id: 3,
-        image: 'https://framerusercontent.com/images/fsFDlU7CKq0E96MXMN9fUXrNw.png',
-        title: 'Project 3'
-    },
-    {
-        id: 4,
-        image: 'https://framerusercontent.com/images/jlIAaI4caPj3oVLaxetMd2RvY.png',
-        title: 'Project 4'
-    },
-    {
-        id: 5,
-        image: 'https://framerusercontent.com/images/RYRvZnstUexQMOl8zRyrvDfDT0.png',
-        title: 'Project 5'
-    }
-];
+const projects: Project[] = Array.from({ length: 14 }, (_, i) => ({
+    id: i + 1,
+    image: `/displayProjects/p${i + 1}.png`,
+    title: `Project ${i + 1}`
+}));
 
 export const RecentWorks = () => {
     const carouselRef = useRef<HTMLUListElement>(null);
     const [canScrollPrev, setCanScrollPrev] = useState(false);
     const [canScrollNext, setCanScrollNext] = useState(true);
+    const autoScrollInterval = useRef<NodeJS.Timeout | null>(null);
 
     const handleScroll = () => {
         if (!carouselRef.current) return;
@@ -54,10 +33,11 @@ export const RecentWorks = () => {
     const scroll = (direction: 'left' | 'right') => {
         if (!carouselRef.current) return;
 
-        const scrollAmount = carouselRef.current.clientWidth;
+        // Calculate single item width (33.333% of visible width for 3 items)
+        const itemWidth = carouselRef.current.clientWidth / 2.5; // Adjusted for 2.5 items visible
         const newScrollLeft = direction === 'left'
-            ? carouselRef.current.scrollLeft - scrollAmount
-            : carouselRef.current.scrollLeft + scrollAmount;
+            ? carouselRef.current.scrollLeft - itemWidth
+            : carouselRef.current.scrollLeft + itemWidth;
 
         carouselRef.current.scrollTo({
             left: newScrollLeft,
@@ -67,8 +47,40 @@ export const RecentWorks = () => {
         setTimeout(handleScroll, 600);
     };
 
+    const startAutoScroll = () => {
+        if (autoScrollInterval.current) {
+            clearInterval(autoScrollInterval.current);
+        }
+
+        autoScrollInterval.current = setInterval(() => {
+            if (carouselRef.current) {
+                const { scrollLeft, scrollWidth, clientWidth } = carouselRef.current;
+
+                if (scrollLeft >= scrollWidth - clientWidth - 10) {
+                    // Reset to beginning
+                    carouselRef.current.scrollTo({
+                        left: 0,
+                        behavior: 'smooth'
+                    });
+                } else {
+                    scroll('right');
+                }
+            }
+        }, 2000); // Scroll every 3 seconds
+    };
+
+    useEffect(() => {
+        startAutoScroll();
+
+        return () => {
+            if (autoScrollInterval.current) {
+                clearInterval(autoScrollInterval.current);
+            }
+        };
+    }, []);
+
     return (
-        <section className={styles.container}>
+        <section id="recent-works" className={styles.container}>
             <div className={styles.carouselWrapper}>
                 <ul
                     ref={carouselRef}

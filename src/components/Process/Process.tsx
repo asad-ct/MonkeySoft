@@ -1,5 +1,9 @@
 'use client';
 
+export { default as Process } from '@/components/ui/about-us-section';
+
+/* --- OLD PROCESS SECTION (commented out) ---
+
 import { MessageSquare, Layout, Rocket, Archive } from 'lucide-react';
 import styles from './process.module.css';
 
@@ -98,3 +102,6 @@ export const Process = () => {
         </section>
     );
 };
+
+--- END OLD PROCESS SECTION --- */
+
