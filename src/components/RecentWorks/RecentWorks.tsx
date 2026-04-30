@@ -95,6 +95,8 @@ export const RecentWorks = () => {
                                         src={project.image}
                                         alt={project.title}
                                         className={styles.projectImage}
+                                        loading="lazy"
+                                        decoding="async"
                                     />
                                 </div>
                                 <div className={styles.overlay}>

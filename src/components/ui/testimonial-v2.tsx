@@ -128,6 +128,8 @@ const TestimonialsColumn = (props: {
                                                 src={image}
                                                 alt={`Avatar of ${name}`}
                                                 className="h-10 w-10 rounded-full object-cover ring-2 ring-neutral-100 dark:ring-neutral-800 group-hover:ring-primary/30 transition-all duration-300 ease-in-out"
+                                                loading="lazy"
+                                                decoding="async"
                                             />
                                             <div className="flex flex-col">
                                                 <cite className="font-semibold not-italic tracking-tight leading-5 text-neutral-900 dark:text-white transition-colors duration-300">

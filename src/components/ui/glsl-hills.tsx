@@ -161,6 +161,8 @@ const GLSLHills = ({ width = '100vw', height = '100vh', cameraZ = 145, planeSize
 
         // Three.js setup
         const renderer = new THREE.WebGLRenderer({ canvas, antialias: false });
+        // Cap pixel ratio at 1 to avoid 2× rendering on retina displays
+        renderer.setPixelRatio(1);
         const scene = new THREE.Scene();
         const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 1, 10000);
         const clock = new THREE.Clock();
@@ -181,10 +183,36 @@ const GLSLHills = ({ width = '100vw', height = '100vh', cameraZ = 145, planeSize
             renderer.render(scene, camera);
         };
 
-        const renderLoop = () => {
-            render();
-            requestAnimationFrame(renderLoop);
+        let animationId: number;
+        let isRunning = false;
+
+        const startLoop = () => {
+            if (isRunning) return;
+            isRunning = true;
+            const loop = () => {
+                render();
+                animationId = requestAnimationFrame(loop);
+            };
+            animationId = requestAnimationFrame(loop);
         };
+
+        const stopLoop = () => {
+            isRunning = false;
+            cancelAnimationFrame(animationId);
+        };
+
+        const observer = new IntersectionObserver(
+            (entries) => {
+                entries.forEach((entry) => {
+                    if (entry.isIntersecting) {
+                        startLoop();
+                    } else {
+                        stopLoop();
+                    }
+                });
+            },
+            { threshold: 0 }
+        );
 
         const init = () => {
             renderer.setSize(window.innerWidth, window.innerHeight);
@@ -194,13 +222,19 @@ const GLSLHills = ({ width = '100vw', height = '100vh', cameraZ = 145, planeSize
             scene.add(plane.mesh);
             window.addEventListener('resize', resize);
             resize();
-            renderLoop();
+            observer.observe(canvas);
+            startLoop();
         };
 
         init();
 
         return () => {
             window.removeEventListener('resize', resize);
+            stopLoop();
+            observer.disconnect();
+            (plane.mesh.material as THREE.Material).dispose();
+            plane.mesh.geometry.dispose();
+            renderer.dispose();
         };
     }, [cameraZ, planeSize, speed]);
 

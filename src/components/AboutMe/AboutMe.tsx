@@ -59,6 +59,8 @@ export default function AboutMe() {
                     <img
                         src="/DP/dp.jpeg"
                         alt="Asad - Full Stack Developer"
+                        loading="lazy"
+                        decoding="async"
                     />
                 </div>
             </div>

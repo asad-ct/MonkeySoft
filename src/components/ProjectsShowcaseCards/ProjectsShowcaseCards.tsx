@@ -148,6 +148,8 @@ export default function ProjectsShowcaseCards() {
                                         src={project.thumbnail}
                                         alt={project.title}
                                         className={styles.projectImage}
+                                        loading="lazy"
+                                        decoding="async"
                                     />
                                 </div>
 
@@ -189,6 +191,8 @@ export default function ProjectsShowcaseCards() {
                                         src={selectedProject.images[currentImageIndex]}
                                         alt={`${selectedProject.title} - ${currentImageIndex + 1}`}
                                         className={styles.modalImage}
+                                        loading="lazy"
+                                        decoding="async"
                                     />
 
                                     {/* Image Navigation */}

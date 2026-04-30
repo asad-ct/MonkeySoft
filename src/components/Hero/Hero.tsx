@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect } from 'react';
+import Script from 'next/script';
 import styles from './hero.module.css';
 
 interface HeroProps {
@@ -10,21 +10,6 @@ interface HeroProps {
 export default function Hero({
     splineUrl = 'https://prod.spline.design/SkHTgNHwnkRsGpjy/scene.splinecode',
 }: HeroProps) {
-    useEffect(() => {
-        // Load Spline viewer script
-        const script = document.createElement('script');
-        script.type = 'module';
-        script.src = 'https://unpkg.com/@splinetool/viewer@1.12.51/build/spline-viewer.js';
-        document.body.appendChild(script);
-
-        return () => {
-            // Cleanup if needed
-            if (script.parentNode) {
-                script.parentNode.removeChild(script);
-            }
-        };
-    }, []);
-
     return (
         <section className={styles.hero} id="hero">
             {/* Text Content - Floats above animation */}
@@ -53,6 +38,13 @@ export default function Hero({
 
             {/* @ts-expect-error - spline-viewer is a web component */}
             <spline-viewer url={splineUrl} />
+
+            {/* Load Spline viewer after page is interactive to avoid blocking LCP */}
+            <Script
+                src="https://unpkg.com/@splinetool/viewer@1.12.51/build/spline-viewer.js"
+                strategy="lazyOnload"
+                type="module"
+            />
         </section>
     );
 }

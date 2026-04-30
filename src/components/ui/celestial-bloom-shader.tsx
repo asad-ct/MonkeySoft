@@ -13,8 +13,9 @@ const CelestialBloomShader = () => {
         // 1) Renderer + Scene + Camera + Clock
         let renderer;
         try {
-            renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-            renderer.setPixelRatio(window.devicePixelRatio);
+            renderer = new THREE.WebGLRenderer({ antialias: false, alpha: true });
+            // Cap pixel ratio at 1 to avoid rendering at 2× on retina displays
+            renderer.setPixelRatio(1);
             container.appendChild(renderer.domElement);
         } catch (err) {
             console.error('WebGL not supported', err);
@@ -45,7 +46,7 @@ const CelestialBloomShader = () => {
       float fbm(vec2 st) {
         float value = 0.0;
         float amplitude = 0.5;
-        for (int i = 0; i < 6; i++) {
+        for (int i = 0; i < 4; i++) {
           value += amplitude * noise(st);
           st *= 2.0;
           amplitude *= 0.5;
@@ -113,15 +114,36 @@ const CelestialBloomShader = () => {
         window.addEventListener('resize', onResize);
         onResize(); // set size before first frame
 
-        // 5) Animation Loop
-        renderer.setAnimationLoop(() => {
-            uniforms.iTime.value = clock.getElapsedTime();
-            renderer.render(scene, camera);
-        });
+        // 5) Animation Loop — pause when not in viewport
+        const startLoop = () => {
+            renderer.setAnimationLoop(() => {
+                uniforms.iTime.value = clock.getElapsedTime();
+                renderer.render(scene, camera);
+            });
+        };
+        const stopLoop = () => {
+            renderer.setAnimationLoop(null);
+        };
+
+        const observer = new IntersectionObserver(
+            (entries) => {
+                entries.forEach((entry) => {
+                    if (entry.isIntersecting) {
+                        startLoop();
+                    } else {
+                        stopLoop();
+                    }
+                });
+            },
+            { threshold: 0 }
+        );
+        observer.observe(container);
+        startLoop();
 
         // 6) Cleanup
         return () => {
             window.removeEventListener('resize', onResize);
+            observer.disconnect();
 
             // stop loop
             renderer.setAnimationLoop(null);
